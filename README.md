@@ -79,7 +79,7 @@ Pokemon_GUI/
 ## 🚀 Instalación y ejecución
 1. Clonar el repositorio:  
    ```bash
-   git clone https://github.com/saenz22/Pokemon_GUI.git
+   git clone git@github.com:saenz22/Pokemon_MVC.git
 
 ---
 
