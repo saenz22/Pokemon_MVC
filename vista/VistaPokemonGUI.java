@@ -1,4 +1,4 @@
-package vista;t 
+
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
