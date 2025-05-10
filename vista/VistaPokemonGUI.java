@@ -1,3 +1,5 @@
+package vista;t 
+
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -7,7 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.SwingUtilities; 
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -16,7 +17,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 
-public class WindowBuilder extends JFrame implements ActionListener, KeyListener {
+public class VistaPokemonGUI extends JFrame implements ActionListener, KeyListener, VistaPokemon {
 
     public String getNombre1() {
         return nombre1;
@@ -42,7 +43,7 @@ public class WindowBuilder extends JFrame implements ActionListener, KeyListener
     public String getPokemon6() {
         return pokemon6;
     }
-    //</editor-fold>
+    
 
     private Timer timer;
     private int currentPanel = 0;
@@ -65,19 +66,21 @@ public class WindowBuilder extends JFrame implements ActionListener, KeyListener
     private JTextField poke5Field = new JTextField();
     private JTextField poke6Field = new JTextField();
 
-    public WindowBuilder() {
+
+
+    public VistaPokemonGUI() {
         setTitle("Pokémon");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(605, 327);
         setResizable(false);
         setLocationRelativeTo(null);
-        showFirstPanel();
         setVisible(true);
 
         timer = new Timer(3000, this);
         timer.setRepeats(false);
         timer.start();
     }
+
 
     private void showFirstPanel() {
         currentPanel = 1;
@@ -488,17 +491,17 @@ public class WindowBuilder extends JFrame implements ActionListener, KeyListener
 
                         System.out.println(" gui intento para crear WindowBatalla...");
                         // Crea la instancia de la ventana
-                        final WindowBatalla batalla = new WindowBatalla(entrenador1, entrenador2);
-                        System.out.println(" gui WindowBatalla objeto creado.");
+                        final VistaPokemonGUI batalla = new VistaPokemonGUI();
+                        System.out.println(" guiVistaPokemonGui objeto creado.");
 
                         // Hazla visible PRIMERO
                         batalla.setVisible(true);
-                        System.out.println(" gui WindowBatalla setVisible(true) llamado.");
+                        System.out.println(" guiVistaPokemonGui setVisible(true) llamado.");
 
                         // Usa invokeLater para la inicialización pesada (selección de Pokémon)
                         SwingUtilities.invokeLater(() -> {
                             System.out.println(" gui Inside invokeLater, llamando iniciarBatalla...");
-                            batalla.iniciarBatalla(); // Llama al nuevo método de inicialización
+         // Llama al nuevo método de inicialización
                             System.out.println(" gui iniciarBatalla terminado.");
                         });
                         //cierra la ventana actual
@@ -521,5 +524,36 @@ public class WindowBuilder extends JFrame implements ActionListener, KeyListener
     @Override
     public void keyReleased(KeyEvent e) {
         
+    }
+    @Override
+    public void bienvenida() {
+      showFirstPanel();
+      
+    }
+    @Override
+    public void crearEntrenadores() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'crearEntrenadores'");
+    }
+    @Override
+    public void crearPokemon() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'crearPokemon'");
+    }
+    @Override
+    public void mostrarPokemon(String nombre, String tipo, String ataques, String hp, String velocidad, String nivel,
+            String df, String dfEs, String atk, String atkEs) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mostrarPokemon'");
+    }
+    @Override
+    public void combate() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'combate'");
+    }
+    @Override
+    public void mostrarGanador(String nombre) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mostrarGanador'");
     }
 }

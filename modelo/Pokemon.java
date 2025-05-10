@@ -105,7 +105,7 @@ public class Pokemon extends SerVivo {
         inicial.df = aleatorio(100, 10);
         inicial.dfEs = aleatorio(100, 10);
         inicial.velocidad = (byte) aleatorio(120, 10);
-        inicial.nivel = (byte) aleatorio(100, 1);
+        inicial.nivel = (byte) aleatorio(50, 1);
         // Inicialización de tipo y ataques
         byte tipoElegido = (byte) (Math.random() * (TipoAtaquePokemon.values().length));
         inicial.setTipo(TipoAtaquePokemon.values()[tipoElegido]);

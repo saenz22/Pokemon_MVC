@@ -80,6 +80,6 @@ public enum TipoAtaquePokemon {
     }
 
     public float getEfectividadContra(TipoAtaquePokemon tipoDefensor) {
-        return efectividad.get(this).getOrDefault(tipoDefensor, 1.0f);
+        return efectividad.get(this).get(tipoDefensor);
     }
 }
