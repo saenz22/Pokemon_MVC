@@ -7,7 +7,7 @@ public class Pokemon extends SerVivo {
     // Inicializando atributos
     private TipoAtaquePokemon tipo;
     private ArrayList<Ataque> ataques = new ArrayList<>();
-    private boolean vivo; // vivo se encanga de inhabilitar al Pokemon cuando hp=0
+    private boolean vivo; // vivo se encanga de inhabilitar al Pokemon cuando hp=0 (cero)
     private float hp;
     private byte velocidad, nivel;
     private short df, dfEs, atk, atkEs;
