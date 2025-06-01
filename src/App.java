@@ -1,8 +1,12 @@
-import modelo.Pokemon;
+
+import vista.*;
+import controlador.Controlador;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        Pokemon Poke1 = Pokemon.instanciarPokemon("HIJO DE LA GRAN RE MIL P*TA");
-        Poke1.entrada();
+        Controlador controlador;
+        VistaPokemon vista = new VistaPokemonGUI();
+        controlador = new Controlador(vista, true);
+        controlador.actualizarEscena();
     }
 }

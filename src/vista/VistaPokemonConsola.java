@@ -229,4 +229,22 @@ public class VistaPokemonConsola implements VistaPokemon {
             System.out.println(pokemon.getNombre() + " ha sobrevivido con " + pokemon.getHp() + " HP restantes.");
         }
     }
+
+    @Override
+    public boolean isError() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isError'");
+    }
+
+    @Override
+    public void pokemones() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'pokemones'");
+    }
+
+    @Override
+    public void mostrarPokemon(ArrayList<Pokemon> pokemon) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mostrarPokemon'");
+    }
 }
