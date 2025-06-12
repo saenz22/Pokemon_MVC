@@ -1,4 +1,4 @@
-# 🎮 Pokémon Battle Simulator GUI
+# 🎮 Pokémon Battle Simulator MVC
 
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
 ![GitHub](https://img.shields.io/badge/Git%20&%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
@@ -7,14 +7,16 @@
 ![UML](https://img.shields.io/badge/UML-D63200?style=for-the-badge&logo=simpleicons&logoColor=white)
 ![POO](https://img.shields.io/badge/POO-4B0082?style=for-the-badge&logo=abstract&logoColor=white)
 ![Eventos](https://img.shields.io/badge/Programaci%C3%B3n%20por%20Eventos-FF69B4?style=for-the-badge&logo=eventbrite&logoColor=white)
+![MVC](https://img.shields.io/badge/Arquitectura-MVC-0066A1?style=for-the-badge&logo=codeberg&logoColor=white)
 
-Una aplicación de escritorio desarrollada en Java que simula combates entre Pokémones, permitiendo al usuario utilizar sus Pokémones y disfrutar de una experiencia interactiva tipo videojuego.
+Una aplicación de escritorio desarrollada en Java, diseñada bajo el patrón de arquitectura MVC (Modelo-Vista-Controlador),que simula combates entre Pokémones, permitiendo al usuario utilizar sus Pokémones y disfrutar de una experiencia interactiva tipo videojuego.
 
----
+--- 
 
 ## 📚 Tabla de Contenidos
 
 - [🎯 Descripción](#-descripción)
+- [📐 Arquitectura MVC](#-arquitectura-mvc)
 - [👥 Integrantes](#-integrantes)
 - [⚙️ Tecnologías Utilizadas](#️-tecnologías-utilizadas)
 - [📁 Estructura del Código](#-estructura-del-código)
@@ -27,7 +29,17 @@ Una aplicación de escritorio desarrollada en Java que simula combates entre Pok
 
 ## 🎯 Descripción
 
-Este proyecto tiene como objetivo la creación de una GUI en Java para simular combates Pokémon con interfaz intuitiva. Los jugadores pueden utilizar habilidades especiales y experimentar un sistema de combate por turnos.
+Este proyecto tiene como objetivo la creación de una GUI en Java para simular combates Pokémon con interfaz intuitiva y que implementa el patrón de arquitectura MVC (Modelo-Vista-Controlador). Los jugadores pueden utilizar habilidades especiales y experimentar un sistema de combate por turnos.
+
+---
+
+## 📐 Arquitectura MVC
+
+- **Modelo**: contiene las clases que representan la lógica de negocio y los datos (Pokémon, Entrenadores, Batallas, etc.).
+
+- **Vista**: construida con Swing/NetBeans, representa la GUI que el usuario utiliza.
+
+- **Controlador**: maneja la interacción entre la Vista y el Modelo, coordinando eventos y actualizaciones.
 
 ---
 
@@ -49,6 +61,7 @@ Este proyecto tiene como objetivo la creación de una GUI en Java para simular c
 - 🧪 UML para diseño de clases y arquitectura
 - 🧠 POO (Programación Orientada a Objetos)
 - 🔔 Programación orientada a eventos
+- 🏛️ MVC (Modelo-Vista-Controlador)
 
 ---
 
@@ -57,41 +70,52 @@ Este proyecto tiene como objetivo la creación de una GUI en Java para simular c
 ```bash
 Pokemon_GUI/
 │
-├── image/                   # Imágenes utilizadas como recurso para el proyecto
-│                   
+│                       
 ├── src/
-│   ├── interfaz/            # Ventanas y botones
-│   ├── logica/              # Lógica del combate, ataques y estadísticas
+│   ├── image/                   # Imágenes utilizadas
+│   ├── controlador/             # Lógica de control
+│   ├── modelo/                  # Clases de negocio y datos
+│   ├── vista/                   # Interfaces gráficas (GUI)
+│   ├── App.java/                # Archivo desde el cual se ejecuta todo el juego
 │   
 │
-├── UML.pdf                  # Diagrama UML del proyecto
-├── README.md
-└── .gitignore
+├── .gitignore
+└── README.md
 ```
 
 ---
 
 ### 📊 Diagrama UML del Juego
-![Diagrama UML del Juego](image/DiagramaUML.png)
+![Diagrama UML del Juego](src/image/diagrama.png)
 
 ---
 
 ## 🚀 Instalación y ejecución
 1. Clonar el repositorio:  
    ```bash
-   git clone https://github.com/saenz22/Pokemon_GUI.git
-
+   git clone https://github.com/saenz22/Pokemon_MVC.git
 ---
 
 ## 🖼️ Capturas de Pantalla
 
 Pantalla Prinicipal
 
-![Pantalla principal](image/poke_principal.png)
+![Pantalla principal](/src/image/Pantalla_principal.png)
+
+Selección de entrenadores
+
+![Selección de entrenadores](/src/image/Seleccion_de_entrenadores.png)
+
+Selección de pokemones
+
+![Selección de pokemones 1](src/image/Seleccion_de_pokemones.png)
+
+![Selección de pokemones 2](src/image/Seleccion_de_pokemon_2.png)
 
 Combate
 
-![Combate](image/Captura_combate.png)
+![Combate](src/image/Combate.png)
+![Combate 2](src/image/Combate_2.png)
 
 
 ---
@@ -100,5 +124,12 @@ Combate
 
 - Implementación de POO y herencia entre clases Pokémon.
 - Manejo de eventos en interfaces gráficas.
+- Modelado de clases con UML.
 - Coordinación en equipo para dividir responsabilidades.
 - Diseño de interfaces amigables al usuario.
+- Diseño de software con MVC.
+- Manejo de eventos en GUIs.
+
+
+
+

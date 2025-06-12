@@ -3,6 +3,10 @@ package modelo;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Enum que representa los diferentes tipos elementales de Pokémon.
+ * Cada tipo tiene un conjunto de ataques y una tabla de efectividad contra otros tipos.
+ */
 public enum TipoAtaquePokemon {
     
     FUEGO(new String[]{
@@ -31,13 +35,21 @@ public enum TipoAtaquePokemon {
         "75 Rocal (F)", "50 Polvo (F)"
     });
 
+    // Arreglo de ataques disponibles para el tipo
     private String[] ataques;
+
+    // Tabla de efectividad: para cada tipo atacante, un mapa de efectividad contra cada tipo defensor
     private static final Map<TipoAtaquePokemon, Map<TipoAtaquePokemon, Float>> efectividad = new HashMap<>();
 
+    /**
+     * Constructor privado para asociar los ataques a cada tipo.
+     * @param ataques Arreglo de nombres de ataques.
+     */
     private TipoAtaquePokemon(String[] ataques) {
         this.ataques = ataques;
     }
 
+    // Inicialización estática de la tabla de efectividad entre tipos
     static { 
         efectividad.put(PLANTA, new HashMap<>() {{
             put(PLANTA, 0.5f);
@@ -76,10 +88,19 @@ public enum TipoAtaquePokemon {
         }});
     }
 
+    /**
+     * Devuelve el arreglo de ataques asociados a este tipo.
+     * @return Arreglo de nombres de ataques.
+     */
     public String[] getAtaques() {
         return ataques;
     }
 
+    /**
+     * Devuelve la efectividad de este tipo atacante contra un tipo defensor.
+     * @param tipoDefensor Tipo de Pokémon defensor.
+     * @return Multiplicador de efectividad (ej: 2.0, 0.5, 1.0, 0.0).
+     */
     public float getEfectividadContra(TipoAtaquePokemon tipoDefensor) {
         return efectividad.get(this).get(tipoDefensor);
     }
