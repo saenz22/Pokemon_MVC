@@ -2,6 +2,12 @@ package modelo;
 
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+
+import vista.VistaPokemonGUI;
+
+// En lugar de hacer un ArrayList de ataques, se usó un HashSet que impide inherentemente que se repitan.
+
 public class Pokemon extends SerVivo {
 
     // Inicializando atributos
@@ -9,10 +15,21 @@ public class Pokemon extends SerVivo {
     private ArrayList<Ataque> ataques = new ArrayList<>();
     private boolean vivo; // vivo se encanga de inhabilitar al Pokemon cuando hp=0
     private float hp;
+    private final float HPMAX;
     private byte velocidad, nivel;
     private short df, dfEs, atk, atkEs;
+    private ImageIcon imagen;
     
     // Getters y Setters
+
+    public ImageIcon getImagen() {
+        return imagen;
+    }
+
+    public void setImagen() {
+        this.imagen = VistaPokemonGUI.ICONOS_TIPO.get(tipo);
+    }
+    
     public short getDf() {
         return df;
     }
@@ -27,6 +44,9 @@ public class Pokemon extends SerVivo {
     }
     public TipoAtaquePokemon getTipo() {
         return tipo;
+    }
+    public float getHPMAX() {
+        return HPMAX;
     }
     public void setTipo(TipoAtaquePokemon tipo) {
         this.tipo = tipo;
@@ -67,6 +87,9 @@ public class Pokemon extends SerVivo {
         // Trayendo herencia: atributo nombre
         super(nombre);
         this.vivo = true;
+        this.hp = aleatorio(500, 50);
+        this.HPMAX = this.hp;
+        this.imagen = null;
     }
 
     // Método para que el usuario elija los ataques de acuerdo con el tipo de pokemon elegido
@@ -76,8 +99,8 @@ public class Pokemon extends SerVivo {
         String nombreAtk;
         float stab = 1.0f;
         TipoAtaque tipoAtk;
-        String[] arsenal = tipoPokemon.getAtaques(); // Se asignan los ataques correspondientes
         ArrayList<Ataque> ataques = new ArrayList<>();
+        String[] arsenal = tipoPokemon.getAtaques(); // Se asignan los ataques correspondientes
 
         // SELECCIÓN AUTOMÁTICA
         while (ataques.size() < 4) {
@@ -105,7 +128,6 @@ public class Pokemon extends SerVivo {
 
         Pokemon inicial = new Pokemon(nombrePokemon);
         // Se inicializan atributos aleatorios
-        inicial.hp = aleatorio(500, 100);
         inicial.atk = aleatorio(100, 10);
         inicial.atkEs = aleatorio(100, 10);
         inicial.df = aleatorio(100, 10);
@@ -116,6 +138,7 @@ public class Pokemon extends SerVivo {
         byte tipoElegido = (byte) (Math.random() * (TipoAtaquePokemon.values().length));
         inicial.setTipo(TipoAtaquePokemon.values()[tipoElegido]);
         inicial.setAtaques(Pokemon.capturarAtaques(inicial.getTipo()));
+        inicial.setImagen();
         return inicial; // Se retorna un nuevo Pokemon
     }
 
@@ -156,19 +179,8 @@ public class Pokemon extends SerVivo {
     private static short aleatorio(int max, int min) {
         return (short) (Math.random() * (max - min + 1) + min);
     }
-    
+
     private static boolean yaElegido(String nombreAtk, ArrayList<Ataque> ataques) {
         return ataques.stream().anyMatch(a -> nombreAtk.contains(a.getNombre()));
-    }
-
-    // Métodos heredados y sobrescritos
-    @Override
-    public void entrada() {
-        System.out.println(getNombre() + ", ¡Yo te elijo!");
-    }
-
-    @Override
-    public void celebracion() {
-        System.out.println("Yupii");
     }
 }

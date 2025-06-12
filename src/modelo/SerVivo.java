@@ -17,15 +17,4 @@ public abstract class SerVivo {
     public SerVivo(String nombre){
         this.nombre = nombre;
     }
-
-    // MÉTODOS CANDIDATOS PARA SER DEL CONTROLADOR
-
-    // Método de saludo
-    public void entrada() {
-        System.out.println("Hola");
-    }
-
-    public void celebracion() {
-        System.out.println("¡Victoria!");
-    }
 }

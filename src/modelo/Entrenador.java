@@ -13,7 +13,6 @@ public class Entrenador extends SerVivo {
         super(nombre);
     }
 
-
     // Getter
     public ArrayList<Pokemon> getEquipo() {
         return equipo;
@@ -35,16 +34,5 @@ public class Entrenador extends SerVivo {
         for (int i = 0; i < 3; i++) {
             equipo.add(Pokemon.instanciarPokemon(lista.get(i))); // Se instancian automáticamente
         }
-    }
-
-    // Métodos heredados y sobrescritos
-    @Override
-    public void entrada(){
-        System.out.println("Me llamo " + getNombre() + ", ¡Y seré tu contrincante!");
-    }
-
-    @Override
-    public void celebracion(){
-        System.out.println("Eso es, ¡victoria!");
     }
 }
