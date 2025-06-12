@@ -1,6 +1,8 @@
 package vista;
 
 import controlador.Controlador;
+import excepciones.AtaqueNoDisponibleException;
+import excepciones.PokemonDebilitadoException;
 import modelo.Ataque;
 import modelo.Entrenador;
 import modelo.Pokemon;
@@ -162,26 +164,36 @@ public class VistaPokemonConsola implements VistaPokemon {
   private byte eleccion(Entrenador entrenador) {
         ArrayList<Pokemon> pokemones = entrenador.getEquipo();
         int opcion = 0;
-        System.out.println("Elige un Pokémon para " + entrenador.getNombre() + ":");
-        for (int i = 0; i < pokemones.size(); i++) {
-            System.out.println((i + 1) + ". " + pokemones.get(i).getNombre());
-        }
-
+        
         while (true) {
             try {
+                System.out.println("Elige un Pokémon para " + entrenador.getNombre() + ":");
+                for (int i = 0; i < pokemones.size(); i++) {
+                    Pokemon p = pokemones.get(i);
+            
+                    String estado = p.getHp() <= 0 ? " (Debilitado)" : " (HP: " + p.getHp() + ")";
+                    System.out.println((i + 1) + ". " + p.getNombre() + estado);
+                }
+
                 System.out.print("Ingresa el número del Pokémon: ");
                 opcion = scanner.nextInt();
 
                 if (opcion >= 1 && opcion <= pokemones.size()) {
+                    // NUEVO: Verificación de que el Pokémon no esté debilitado.
+                    if (pokemones.get(opcion - 1).getHp() <= 0) {
+                        throw new PokemonDebilitadoException("Error: " + pokemones.get(opcion - 1).getNombre() + " está debilitado y no puede luchar.");
+                    }
                     System.out.println("Has elegido a " + pokemones.get(opcion - 1).getNombre());
-                    break; // Salimos del bucle si la opción es válida.
+                    break;
                 } else {
-                    System.out.println("Opción no válida. Elige un número entre 1 y " + pokemones.size() + ".");
+                    throw new IndexOutOfBoundsException("Opción no válida. Elige un número entre 1 y " + pokemones.size() + ".");
                 }
-            } catch (InputMismatchException e) { //Este agarra los que no coincide con el patrón del tipo esperado o está fuera del intervalo del tipo esperado
-                System.out.println("Entrada no válida. Por favor, ingresa únicamente un número .");
-
+            } catch (InputMismatchException e) { 
+                System.err.println("Entrada no válida. Por favor, ingresa únicamente un número.");
                 scanner.next(); 
+           
+            } catch (PokemonDebilitadoException | IndexOutOfBoundsException e) {
+                System.err.println(e.getMessage());
             }
         }
         
@@ -193,13 +205,14 @@ public class VistaPokemonConsola implements VistaPokemon {
     public void elegirAtaque(Pokemon pokemon) {
         ArrayList<Ataque> ataques = pokemon.getAtaques();
         int opcion = 0;
-        System.out.println("Elige un Ataque para: " + pokemon.getNombre());
-        for (int i = 0; i < ataques.size(); i++) {
-            System.out.println((i + 1) + ". " + ataques.get(i).getNombre() + " / Poder: " + ataques.get(i).getPoder());
-        }
 
         while (true) {
             try {
+                System.out.println("Elige un Ataque para: " + pokemon.getNombre());
+                for (int i = 0; i < ataques.size(); i++) {
+                    System.out.println((i + 1) + ". " + ataques.get(i).getNombre() + " / Poder: " + ataques.get(i).getPoder());
+                }
+
                 System.out.print("Ingresa el número del ataque: ");
                 opcion = scanner.nextInt();
 
@@ -207,11 +220,13 @@ public class VistaPokemonConsola implements VistaPokemon {
                     System.out.println("Has elegido usar " + ataques.get(opcion - 1).getNombre());
                     break; 
                 } else {
-                    System.out.println("Opción no válida. Elige un número entre 1 y " + ataques.size() + ".");
+                    throw new AtaqueNoDisponibleException("Opción no válida. Elige un número entre 1 y " + ataques.size() + ".");
                 }
             } catch (InputMismatchException e) { 
-                System.out.println("Entrada no válida. Por favor, ingresa únicamente un número. ");            
+                System.err.println("Entrada no válida. Por favor, ingresa únicamente un número.");            
                 scanner.next(); 
+            } catch (AtaqueNoDisponibleException e) { 
+                System.err.println(e.getMessage());
             }
         } 
   
