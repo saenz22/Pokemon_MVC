@@ -6,12 +6,13 @@ import modelo.Entrenador;
 import modelo.Pokemon;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.NoSuchElementException;
 
 /**
- * Implementación de la interfaz VistaPokemon para interacción por consola.
- * Permite al usuario jugar el simulador Pokémon desde la terminal.
+ Implementación de la interfaz VistaPokemon para interacción por consola.
+  Permite al usuario jugar el simulador Pokémon desde la terminal.
  */
 public class VistaPokemonConsola implements VistaPokemon {
     // Scanner para la entrada de datos por consola
@@ -22,7 +23,7 @@ public class VistaPokemonConsola implements VistaPokemon {
     private Controlador controlador;
 
     /**
-     * Constructor. Inicializa los valores y el scanner.
+      Constructor. Inicializa los valores y el scanner.
      */
     public VistaPokemonConsola() {
         scanner = new Scanner(System.in);
@@ -76,13 +77,13 @@ public class VistaPokemonConsola implements VistaPokemon {
                 }
                 nombresValidos = true; 
 
-            } catch (NoSuchElementException e) {
+            } catch (NoSuchElementException e) { // esta atrapa de las entradas cuando intenta acceder a un elemento que no existe
                 System.err.println("Error: No se encontró más entrada. Saliendo...");
                 break;
             } catch (IllegalStateException e) {
                 System.err.println("Error: El scanner ha sido cerrado. Saliendo...");
                 break;
-            }
+            } // ilegal state exeption es para cuando se quiere evitar que una funcion se invoque este en un momento inadecuado
         }
 
         String texto = """
@@ -102,9 +103,9 @@ public class VistaPokemonConsola implements VistaPokemon {
         controlador.avanzarEscena();
     }
 
-    /**
-     * Solicita los nombres de los Pokémon para el equipo y avanza la escena.
-     * Valida que los nombres no estén vacíos.
+    /* 
+     Solicita los nombres de los Pokémon para el equipo y avanza la escena.
+     salida que los nombres no estén vacíos.
      */
     @Override
     public void pokemones() {
@@ -146,9 +147,9 @@ public class VistaPokemonConsola implements VistaPokemon {
         controlador.avanzarEscena();
     }
 
-    /**
-     * Permite al usuario elegir el Pokémon activo para el combate de cada entrenador.
-     * Llama a un método auxiliar para la selección.
+    /*
+    Permite al usuario elegir el Pokémon activo para el combate de cada entrenador.
+      Llama a un método auxiliar para la selección.
      */
     @Override
     public void elegirPokemon(Entrenador entrenador1, Entrenador entrenador2) {
@@ -158,103 +159,71 @@ public class VistaPokemonConsola implements VistaPokemon {
         System.out.println(controlador.getOrden().get(0).getNombre() + " vs " + controlador.getOrden().get(1).getNombre());
     }
 
-    /**
-     * Método auxiliar para elegir un Pokémon de un equipo.
-     * @param entrenador Entrenador que elige.
-     * @return Índice del Pokémon elegido (1-3).
-     */
-    private byte eleccion(Entrenador entrenador) {
+  private byte eleccion(Entrenador entrenador) {
         ArrayList<Pokemon> pokemones = entrenador.getEquipo();
-        int opcion = 0; 
-        System.out.println("Elige un Pokémon:" + entrenador.getNombre());
+        int opcion = 0;
+        System.out.println("Elige un Pokémon para " + entrenador.getNombre() + ":");
         for (int i = 0; i < pokemones.size(); i++) {
             System.out.println((i + 1) + ". " + pokemones.get(i).getNombre());
         }
-        while(true) {
-            if (scanner.hasNextInt()) {
+
+        while (true) {
+            try {
+                System.out.print("Ingresa el número del Pokémon: ");
                 opcion = scanner.nextInt();
-                switch (opcion) {
-                    case 1:
-                        System.out.println("Has elegido a " + pokemones.get(0).getNombre());
-                        break; 
-                    case 2:
-                        System.out.println("Has elegido a " + pokemones.get(1).getNombre());
-                        break;
-                    case 3:
-                        System.out.println("Has elegido a " + pokemones.get(2).getNombre());
-                        break;
-                    default:
-                        System.out.println("Opción no válida. Elige un número entre 1 y 3.");
+
+                if (opcion >= 1 && opcion <= pokemones.size()) {
+                    System.out.println("Has elegido a " + pokemones.get(opcion - 1).getNombre());
+                    break; // Salimos del bucle si la opción es válida.
+                } else {
+                    System.out.println("Opción no válida. Elige un número entre 1 y " + pokemones.size() + ".");
                 }
-                if (opcion >= 1 && opcion <= 3) {
-                    break;
-                }
-            } else {
-                System.out.println("Entrada no válida. Por favor, ingresa un número.");
-                scanner.nextLine();
-                scanner.nextLine();
+            } catch (InputMismatchException e) { //Este agarra los que no coincide con el patrón del tipo esperado o está fuera del intervalo del tipo esperado
+                System.out.println("Entrada no válida. Por favor, ingresa únicamente un número .");
+
+                scanner.next(); 
             }
         }
+        
+        scanner.nextLine();
         limpiarConsola();
         return (byte) opcion;
     }
-
-    /**
-     * Permite al usuario elegir el ataque a realizar para el Pokémon activo.
-     * Llama al controlador para ejecutar el ataque.
-     */
     @Override
     public void elegirAtaque(Pokemon pokemon) {
         ArrayList<Ataque> ataques = pokemon.getAtaques();
-        int opcion = 0; 
-        System.out.println("Elige un Ataque para : " + pokemon.getNombre());
+        int opcion = 0;
+        System.out.println("Elige un Ataque para: " + pokemon.getNombre());
         for (int i = 0; i < ataques.size(); i++) {
-            System.out.println((i + 1) + ". " + ataques.get(i).getNombre() + " / " + ataques.get(i).getPoder());
+            System.out.println((i + 1) + ". " + ataques.get(i).getNombre() + " / Poder: " + ataques.get(i).getPoder());
         }
-        while(true) {
-            if (scanner.hasNextInt()) {
-                opcion = scanner.nextInt();
-                switch (opcion) {
-                    case 1:
-                        System.out.println("Has elegido a " + ataques.get(0).getNombre());
-                        break;
-                    case 2:
-                        System.out.println("Has elegido a " + ataques.get(1).getNombre());
-                        break;
-                    case 3:
-                        System.out.println("Has elegido a " + ataques.get(2).getNombre());
-                        break;
-                    case 4:
-                        System.out.println("Has elegido a " + ataques.get(3).getNombre());
-                        break;
-                    default:
-                        System.out.println("Opción no válida. Elige un número entre 1 y 4.");
-                }
-                if (opcion >= 1 && opcion <= 4) {
-                    break;
-                }
-            } else {
-                System.out.println("Entrada no válida. Por favor, ingresa un número.");
-                scanner.nextLine();
-                scanner.nextLine();
-            }
-        }
-        limpiarConsola();
-        controlador.atacar(ataques.get(opcion-1));
-    }
 
-    /**
-     * Asocia el controlador a la vista para manejar eventos y flujo del juego.
-     */
+        while (true) {
+            try {
+                System.out.print("Ingresa el número del ataque: ");
+                opcion = scanner.nextInt();
+
+                if (opcion >= 1 && opcion <= ataques.size()) {
+                    System.out.println("Has elegido usar " + ataques.get(opcion - 1).getNombre());
+                    break; 
+                } else {
+                    System.out.println("Opción no válida. Elige un número entre 1 y " + ataques.size() + ".");
+                }
+            } catch (InputMismatchException e) { 
+                System.out.println("Entrada no válida. Por favor, ingresa únicamente un número. ");            
+                scanner.next(); 
+            }
+        } 
+  
+        scanner.nextLine();
+        limpiarConsola(); 
+        controlador.atacar(ataques.get(opcion - 1));
+    }
     @Override
     public void setControlador(Controlador controlador) {
         this.controlador = controlador;
     }
 
-    /**
-     * Muestra la información de los Pokémon seleccionados y avanza la escena.
-     * Luego permite elegir el ataque para el primer Pokémon en el orden.
-     */
     @Override
     public void mostrarPokemon(ArrayList<Pokemon> pokemon) {
         for (int i = 0; i < pokemon.size(); i++) {  
@@ -267,8 +236,8 @@ public class VistaPokemonConsola implements VistaPokemon {
         elegirAtaque(controlador.getOrden().get(0));
     }
     
-    /**
-     * Muestra el mensaje de victoria y termina el programa.
+    /*
+      Muestra el mensaje de victoria y termina el programa.
      */
     @Override
     public void ganador(Entrenador entrenador) {
@@ -276,28 +245,17 @@ public class VistaPokemonConsola implements VistaPokemon {
         System.exit(0);
     }
 
-    /**
-     * Indica si ocurrió un error en la vista (no implementado, siempre retorna false).
-     */
     @Override
     public boolean isError() {
         return false;
     }
-
-    /**
-     * Continúa el flujo del juego permitiendo elegir el siguiente ataque.
-     */
     @Override
     public void continuar() {
         elegirAtaque(controlador.getOrden().get(0));
     }
-
-    /**
-     * Limpia la consola y espera a que el usuario presione Enter para continuar.
-     */
     public void limpiarConsola() {
         System.out.println("Presiona Enter para continuar...");
-        scanner.nextLine();
+        scanner.nextLine(); 
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
